@@ -1,4 +1,4 @@
-const API_URL = "http://127.0.0.1:8000";
+const API_URL = "";
 
 function openTab(tabName) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -300,3 +300,4 @@ async function planejarBolao() {
         <p style="text-align:right; color:#888;">Troco estimado: ${moneyFormatter.format(change)}</p>
     `;
 }
+
