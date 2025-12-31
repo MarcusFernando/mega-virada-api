@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import RedirectResponse
 from models import BetScenario, SimulationResponse, ConferirBolaoRequest, BolaoSummary, BetResult, PrizeResult
 from lottery_logic import analyze_bet
 
@@ -18,6 +19,10 @@ app.add_middleware(
 )
 
 
+@app.get("/")
+async def read_root():
+    return RedirectResponse(url="/site/index.html")
+    
 @app.post("/simular-premio", response_model=SimulationResponse)
 def simular_premio(scenario: BetScenario):
     """
@@ -126,4 +131,5 @@ def gerar_jogo_inteligente(strategy: str = "equilibrada", quantity: int = 6):
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
