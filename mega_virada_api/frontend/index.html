@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega da Virada - Simulador</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>MEGA DA VIRADA</h1>
+            <p class="subtitle">Simulador e Inteligência Estatística</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="openTab('simulador')">Simular</button>
+            <button class="tab-btn" onclick="openTab('conferidor')">Conferir</button>
+            <button class="tab-btn" onclick="openTab('estatisticas'); carregarEstatisticas()">Estatísticas</button>
+        </div>
+
+        <!-- SIMULADOR -->
+        <div id="simulador" class="tab-content active">
+            <div class="card">
+                <h3>Simular Aposta Única</h3>
+                <p class="desc">Descubra os prêmios múltiplos do desdobramento.</p>
+
+                <div class="input-group">
+                    <label>Seus Números</label>
+                    <input type="text" id="sim-bet" placeholder="Ex: 1 2 3 4 5 6 7 8">
+                </div>
+
+                <div class="input-group">
+                    <label>Números Sorteados</label>
+                    <input type="text" id="sim-draw" placeholder="Ex: 1 2 3 4 5 60">
+                </div>
+
+                <button onclick="simularPremio()">Simular Resultado</button>
+
+                <div id="sim-result" class="result-box hidden"></div>
+            </div>
+        </div>
+
+        <!-- CONFERIDOR -->
+        <div id="conferidor" class="tab-content">
+            <div class="card">
+                <h3>Gerenciador de Bolão</h3>
+                <p class="desc">Confira centenas de jogos de uma vez.</p>
+
+                <div class="input-group">
+                    <label>Números Sorteados</label>
+                    <input type="text" id="bol-draw" placeholder="Ex: 10 20 30 40 50 60">
+                </div>
+
+                <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:20px;">
+                    <div>
+                        <label>Prêmio Sena (R$)</label>
+                        <input type="number" id="prize-sena" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label>Prêmio Quina (R$)</label>
+                        <input type="number" id="prize-quina" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label>Prêmio Quadra (R$)</label>
+                        <input type="number" id="prize-quadra" placeholder="0.00">
+                    </div>
+                    <div>
+                        <label>Nº de Cotas</label>
+                        <input type="number" id="num-shares" value="1">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Seus Jogos (Um por linha)</label>
+                    <textarea id="bol-bets" rows="10" placeholder="01 02 03 04 05 06&#10;10 20 30 40 50 60"></textarea>
+                </div>
+
+                <button onclick="conferirBolao()">Conferir Todos</button>
+
+                <div id="bol-result" class="result-box hidden"></div>
+            </div>
+        </div>
+
+        <!-- ESTATISTICAS -->
+        <div id="estatisticas" class="tab-content">
+            <div class="card">
+                <h3>Inteligência Estatística</h3>
+                <p class="desc">Análise baseada em todos os jogos da história.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <h4>Mais Sorteados (Quentes)</h4>
+                        <ul id="list-hot" class="stat-list">Carregando...</ul>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Mais Atrasados</h4>
+                        <ul id="list-delayed" class="stat-list">Carregando...</ul>
+                    </div>
+                </div>
+
+                <hr style="border-color:#333; margin: 30px 0;">
+
+                <h3>Gerador de Jogos Inteligente</h3>
+                <div class="generator-controls">
+                    <div style="display:flex; gap:10px;">
+                        <select id="strategy" style="flex:2;">
+                            <option value="equilibrada">Estratégia Equilibrada (Quentes + Atrasados)</option>
+                            <option value="quentes">Focar nos Números Quentes</option>
+                            <option value="atrasados">Focar nos Atrasados (Zebra)</option>
+                            <option value="surpresinha">Totalmente Aleatório</option>
+                        </select>
+                        <select id="quantity" style="flex:1;">
+                            <option value="6">6 Dezenas</option>
+                            <option value="7">7 Dezenas</option>
+                            <option value="8">8 Dezenas</option>
+                            <option value="9">9 Dezenas</option>
+                            <option value="10">10 Dezenas</option>
+                            <option value="11">11 Dezenas</option>
+                            <option value="12">12 Dezenas</option>
+                            <option value="13">13 Dezenas</option>
+                            <option value="14">14 Dezenas</option>
+                            <option value="15">15 Dezenas</option>
+                        </select>
+                    </div>
+                    <button onclick="gerarJogo()" style="margin-top: 10px;">Gerar Jogo</button>
+                </div>
+
+                <div id="gen-result" class="result-box hidden" style="text-align:center;">
+                    <span style="font-size: 1.5rem; color: var(--accent); font-weight: bold;" id="gen-numbers"></span>
+                </div>
+
+                <hr style="border-color:#333; margin: 30px 0;">
+
+                <h3>Planejador de Bolão (NOVO)</h3>
+                <p class="desc">Defina o orçamento e eu sugiro os jogos.</p>
+
+                <div class="input-group">
+                    <label>Valor por Cota (R$)</label>
+                    <input type="number" id="plan-share-value" placeholder="100.00">
+                </div>
+                <div class="input-group">
+                    <label>Número de Cotas</label>
+                    <input type="number" id="plan-shares" placeholder="10">
+                </div>
+
+                <button onclick="planejarBolao()"
+                    style="background: linear-gradient(45deg, #FFD700, #DAA520); color:black;">💰 Gerar Estratégia do
+                    Bolão</button>
+
+                <div id="plan-result" class="result-box hidden"></div>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
