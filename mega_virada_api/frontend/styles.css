@@ -1,4 +1,4 @@
-/* --- RESET E VARIÁVEIS --- */
+/* --- RESET E BASES --- */
 :root {
     --primary: #20913f;
     --primary-dark: #125725;
@@ -9,7 +9,7 @@
     --text-dim: #b0b0b0;
 }
 *, *::before, *::after {
-    box-sizing: border-box; /* ISSO É CRUCIAL: impede que padding aumente a largura */
+    box-sizing: border-box; /* Impede que padding aumente a largura */
 }
 body {
     font-family: 'Montserrat', sans-serif;
@@ -17,7 +17,8 @@ body {
     color: var(--text-light);
     margin: 0;
     padding: 10px; /* Padding menor no body para mobile */
-    overflow-x: hidden; /* Impede rolagem horizontal indesejada no nível macro */
+    overflow-x: hidden; /* Impede rolagem horizontal indesejada */
+    width: 100vw;
 }
 .container {
     max-width: 800px;
@@ -49,6 +50,7 @@ h1 {
     justify-content: center;
     margin-bottom: 20px;
     gap: 8px;
+    width: 100%;
 }
 .tab-btn {
     background: transparent;
@@ -61,7 +63,7 @@ h1 {
     font-size: 0.9rem;
     flex: 1 1 auto; /* Flexível: cresce e encolhe */
     text-align: center;
-    min-width: 120px; /* Tamanho mínimo para não quebrar texto */
+    min-width: 100px; /* Tamanho mínimo para não quebrar texto */
 }
 .tab-btn.active {
     background: var(--primary);
@@ -69,7 +71,7 @@ h1 {
     box-shadow: 0 0 15px rgba(32, 145, 63, 0.5);
 }
 /* --- CONTEÚDO E CARDS --- */
-.tab-content { display: none; }
+.tab-content { display: none; width: 100%; }
 .tab-content.active { display: block; animation: fadeIn 0.5s; }
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(10px); }
@@ -77,12 +79,22 @@ h1 {
 }
 .card {
     background-color: var(--card-bg);
-    padding: 20px 15px; /* Padding lateral reduzido */
+    padding: 20px 15px; /* Padding lateral reduzido para mobile */
     border-radius: 12px;
     box-shadow: 0 5px 20px rgba(0,0,0,0.5);
     border: 1px solid #333;
     width: 100%;
     margin-bottom: 20px;
+}
+h3 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 1.3rem;
+}
+.desc {
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    font-size: 0.95rem;
 }
 /* --- INPUTS E FORMULÁRIOS --- */
 .input-group {
@@ -110,13 +122,43 @@ select {
     color: white;
     font-size: 1rem;
     font-family: inherit;
+    box-shadow: none;
 }
-/* Generator Controls (Selects lado a lado ou empilhados) */
-.generator-controls {
+/* --- GRIDS RESPONSIVOS (NOVAS CLASSES) --- */
+/* Input Grid (Prêmios) - Mobile First: Empilhado */
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 15px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+/* Generator Row (Selects) - Mobile First: Empilhado */
+.generator-row {
     display: flex;
-    flex-direction: column; /* Mobile first: um embaixo do outro */
+    flex-direction: column;
     gap: 15px;
     width: 100%;
+}
+.select-strategy, .select-quantity {
+    width: 100%;
+}
+/* Botões Globais */
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+button:hover { 
+    transform: scale(1.01); 
+    filter: brightness(1.1); 
 }
 /* --- RESULTADOS --- */
 .result-box {
@@ -126,21 +168,36 @@ select {
     border-left: 5px solid var(--accent);
     border-radius: 5px;
     width: 100%;
-    overflow-wrap: break-word; /* Quebra palavras longas se precisar */
+    overflow-wrap: break-word; /* Quebra texto muito longo */
 }
+.hidden { display: none; }
+.result-detail { margin: 5px 0; font-size: 1rem; }
+.highlight { color: var(--accent); font-weight: bold; }
 /* --- ESTATÍSTICAS (GRID) --- */
 .stats-grid {
     display: grid;
     grid-template-columns: 1fr; /* Mobile: 1 coluna única */
     gap: 15px;
-    margin-top: 20px;
+    margin-bottom: 20px;
     width: 100%;
 }
 .stat-box {
     background: #152218;
     padding: 15px;
     border-radius: 8px;
-    width: 100%; /* Garante que o box não vaze */
+    width: 100%;
+    overflow: hidden; /* Impede vazar */
+}
+.stat-box h4 {
+    margin-top: 0;
+    color: var(--primary);
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+}
+.stat-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
 .stat-list li {
     display: flex;
@@ -150,6 +207,14 @@ select {
     border-bottom: 1px solid #2a2a2a;
     font-size: 0.9rem;
 }
+.stat-list li:last-child { border-bottom: none; }
+.stat-badge {
+    background: #333;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    white-space: nowrap;
+}
 /* --- MEDIA QUERY: TABLETS E DESKTOPS --- */
 @media (min-width: 768px) {
     body { padding: 40px; }
@@ -157,18 +222,25 @@ select {
     h1 { font-size: 2.5rem; }
     
     .card { padding: 30px; }
-    /* No PC, volta a ser 2 colunas */
+    /* No PC, Estatísticas voltam a ser 2 colunas */
     .stats-grid {
         grid-template-columns: 1fr 1fr;
         gap: 20px;
     }
-    /* No PC, os controles do gerador ficam lado a lado */
-    .generator-controls {
+    /* No PC, Input Grid volta a ser 2 colunas */
+    .input-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    /* No PC, Selects voltam a ser lado a lado */
+    .generator-row {
         flex-direction: row;
     }
     
-    .generator-controls select {
-        width: auto;
-        flex: 1;
+    .select-strategy {
+        flex: 2; /* Estratégia ocupa mais espaço */
+    }
+    
+    .select-quantity {
+        flex: 1; /* Quantidade ocupa menos */
     }
 }
