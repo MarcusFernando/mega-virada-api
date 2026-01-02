@@ -1,149 +1,158 @@
-/* --- RESET E BASES --- */
 :root {
     --primary: #20913f;
+    /* Mega Sena Green */
     --primary-dark: #125725;
     --accent: #f4c01e;
+    /* Gold */
     --bg-dark: #121212;
     --card-bg: #1e1e1e;
     --text-light: #ffffff;
     --text-dim: #b0b0b0;
 }
-*, *::before, *::after {
-    box-sizing: border-box; /* Impede que padding aumente a largura */
+
+* {
+    box-sizing: border-box;
 }
+
+html {
+    background-color: var(--bg-dark);
+}
+
 body {
     font-family: 'Montserrat', sans-serif;
     background-color: var(--bg-dark);
     color: var(--text-light);
     margin: 0;
-    padding: 10px; /* Padding menor no body para mobile */
-    overflow-x: hidden; /* Impede rolagem horizontal indesejada */
-    width: 100vw;
+    padding: 20px;
 }
+
 .container {
     max-width: 800px;
     margin: 0 auto;
-    width: 100%;
 }
-/* --- HEADER --- */
+
 header {
     text-align: center;
-    margin-bottom: 25px;
-    padding: 0 10px;
+    margin-bottom: 40px;
 }
+
 h1 {
     color: var(--primary);
-    font-size: 1.8rem; /* Fonte menor no mobile */
-    line-height: 1.2;
+    font-size: 2.5rem;
     margin: 0;
     text-shadow: 0 0 10px rgba(32, 145, 63, 0.3);
 }
+
 .subtitle {
     color: var(--accent);
-    font-size: 0.95rem;
+    font-size: 1.2rem;
     margin-top: 5px;
 }
-/* --- TABS --- */
+
+/* Tabs */
 .tabs {
     display: flex;
-    flex-wrap: wrap; /* Permite que botões caiam para linha de baixo */
     justify-content: center;
-    margin-bottom: 20px;
-    gap: 8px;
-    width: 100%;
+    margin-bottom: 30px;
+    gap: 10px;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
 }
+
 .tab-btn {
     background: transparent;
     border: 2px solid var(--primary);
     color: var(--text-light);
-    padding: 10px 15px;
-    border-radius: 20px;
+    padding: 10px 20px;
+    border-radius: 25px;
     cursor: pointer;
     font-weight: 600;
-    font-size: 0.9rem;
-    flex: 1 1 auto; /* Flexível: cresce e encolhe */
-    text-align: center;
-    min-width: 100px; /* Tamanho mínimo para não quebrar texto */
+    transition: all 0.3s ease;
 }
+
+.tab-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
 .tab-btn.active {
     background: var(--primary);
     color: white;
     box-shadow: 0 0 15px rgba(32, 145, 63, 0.5);
 }
-/* --- CONTEÚDO E CARDS --- */
-.tab-content { display: none; width: 100%; }
-.tab-content.active { display: block; animation: fadeIn 0.5s; }
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+
+.tab-content {
+    display: none;
+    animation: fadeIn 0.5s;
 }
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Forms and Cards */
 .card {
     background-color: var(--card-bg);
-    padding: 20px 15px; /* Padding lateral reduzido para mobile */
-    border-radius: 12px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     border: 1px solid #333;
-    width: 100%;
-    margin-bottom: 20px;
 }
+
 h3 {
     margin-top: 0;
     color: var(--accent);
-    font-size: 1.3rem;
 }
+
 .desc {
     color: var(--text-dim);
     margin-bottom: 20px;
-    font-size: 0.95rem;
 }
-/* --- INPUTS E FORMULÁRIOS --- */
+
 .input-group {
-    margin-bottom: 15px;
-    width: 100%;
+    margin-bottom: 20px;
 }
+
 label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     font-weight: bold;
     color: #ddd;
-    font-size: 0.95rem;
 }
-/* Força inputs a nunca passarem de 100% */
-input[type="text"], 
+
+input[type="text"],
 input[type="number"],
-textarea, 
-select {
+textarea {
     width: 100%;
-    max-width: 100%;
     padding: 12px;
     background-color: #2a2a2a;
     border: 1px solid #444;
     border-radius: 8px;
     color: white;
-    font-size: 1rem;
-    font-family: inherit;
-    box-shadow: none;
+    font-family: monospace;
+    font-size: 1.1rem;
+    box-sizing: border-box;
+    /* Fixes padding issue */
 }
-/* --- GRIDS RESPONSIVOS (NOVAS CLASSES) --- */
-/* Input Grid (Prêmios) - Mobile First: Empilhado */
-.input-grid {
-    display: grid;
-    grid-template-columns: 1fr; 
-    gap: 15px;
-    margin-bottom: 20px;
-    width: 100%;
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 5px var(--primary);
 }
-/* Generator Row (Selects) - Mobile First: Empilhado */
-.generator-row {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
-}
-.select-strategy, .select-quantity {
-    width: 100%;
-}
-/* Botões Globais */
+
 button {
     width: 100%;
     padding: 15px;
@@ -151,96 +160,156 @@ button {
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 10px;
+    transition: transform 0.2s;
 }
-button:hover { 
-    transform: scale(1.01); 
-    filter: brightness(1.1); 
+
+button:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
 }
-/* --- RESULTADOS --- */
+
+button:active {
+    transform: scale(0.98);
+}
+
+/* Results */
 .result-box {
-    margin-top: 20px;
-    padding: 15px;
+    margin-top: 25px;
+    padding: 20px;
     background-color: #152218;
     border-left: 5px solid var(--accent);
     border-radius: 5px;
-    width: 100%;
-    overflow-wrap: break-word; /* Quebra texto muito longo */
+    overflow-x: auto; /* Prevent overflow on small screens */
 }
-.hidden { display: none; }
-.result-detail { margin: 5px 0; font-size: 1rem; }
-.highlight { color: var(--accent); font-weight: bold; }
-/* --- ESTATÍSTICAS (GRID) --- */
+
+.hidden {
+    display: none;
+}
+
+.result-detail {
+    margin: 5px 0;
+    font-size: 1.1rem;
+}
+
+.highlight {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+small {
+    color: #666;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Stats Grid */
 .stats-grid {
     display: grid;
-    grid-template-columns: 1fr; /* Mobile: 1 coluna única */
-    gap: 15px;
-    margin-bottom: 20px;
-    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
 }
+
 .stat-box {
     background: #152218;
     padding: 15px;
     border-radius: 8px;
-    width: 100%;
-    overflow: hidden; /* Impede vazar */
 }
+
 .stat-box h4 {
     margin-top: 0;
     color: var(--primary);
     border-bottom: 2px solid #333;
     padding-bottom: 5px;
 }
+
 .stat-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
+
 .stat-list li {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
+    padding: 5px 0;
     border-bottom: 1px solid #2a2a2a;
-    font-size: 0.9rem;
 }
-.stat-list li:last-child { border-bottom: none; }
+
+.stat-list li:last-child {
+    border-bottom: none;
+}
+
 .stat-badge {
     background: #333;
     padding: 2px 8px;
     border-radius: 10px;
-    font-size: 0.85rem;
-    white-space: nowrap;
+    font-size: 0.9rem;
 }
-/* --- MEDIA QUERY: TABLETS E DESKTOPS --- */
-@media (min-width: 768px) {
-    body { padding: 40px; }
+
+/* Generator */
+.generator-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.controls-row {
+    display: flex;
+    gap: 10px;
+}
+
+#strategy {
+    flex: 2;
+}
+
+#quantity {
+    flex: 1;
+}
+
+select {
+    padding: 12px;
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: white;
+    font-size: 1rem;
+    width: 100%; /* Ensure full width in flex container or stacked */
+    box-sizing: border-box;
+}
+
+/* --- Mobile Responsiveness --- */
+@media (max-width: 600px) {
+    body {
+        padding: 10px;
+    }
     
-    h1 { font-size: 2.5rem; }
-    
-    .card { padding: 30px; }
-    /* No PC, Estatísticas voltam a ser 2 colunas */
+    h1 {
+        font-size: 1.8rem;
+    }
+
     .stats-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        grid-template-columns: 1fr; /* Stack columns */
     }
-    /* No PC, Input Grid volta a ser 2 colunas */
-    .input-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-    /* No PC, Selects voltam a ser lado a lado */
-    .generator-row {
-        flex-direction: row;
+
+    .controls-row {
+        flex-direction: column; /* Stack select inputs */
     }
     
-    .select-strategy {
-        flex: 2; /* Estratégia ocupa mais espaço */
+    .tabs {
+        flex-direction: column; 
     }
     
-    .select-quantity {
-        flex: 1; /* Quantidade ocupa menos */
+    .tab-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Stack the prize inputs in Conferidor */
+    #conferidor div[style*="display:grid"] {
+        grid-template-columns: 1fr !important;
     }
 }
